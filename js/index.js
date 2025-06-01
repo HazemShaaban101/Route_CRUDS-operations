@@ -59,7 +59,7 @@ function displayProducts(array = null) {
 							<p class="h6 px-2">Category: ${productList[i].category}</p>
 							<p class="h6 pb-1 px-2">Desc: ${productList[i].desc}</p>
 							<div class="text-center px-2">
-								<button class="btn btn-outline-warning w-100 mb-2">Edit info</button>
+								<button onclick="editProduct(${i})" class="btn btn-outline-warning w-100 mb-2">Edit info</button>
 							<button onclick="deleteProduct(${i})" class="btn btn-outline-danger w-100 mb-2">Delete product</button>
 							</div>
 						</div>
@@ -83,7 +83,9 @@ function displayProducts(array = null) {
 							<p class="h6 px-2">Category: ${productList[array[i]].category}</p>
 							<p class="h6 pb-1 px-2">Desc: ${productList[array[i]].desc}</p>
 							<div class="text-center px-2">
-								<button class="btn btn-outline-warning w-100 mb-2">Edit info</button>
+								<button onclick="editProduct(${
+									array[i]
+								})" class="btn btn-outline-warning w-100 mb-2">Edit info</button>
 							<button onclick="deleteProduct(${
 								array[i]
 							})" class="btn btn-outline-danger w-100 mb-2">Delete product</button>
@@ -120,4 +122,80 @@ function searchProduct() {
 
 	// utilize the newer displayproducts function that takes an array
 	displayProducts(arrayOfProducts);
+}
+
+function editProduct(productIndex) {
+	// add cancel edit button
+	if (document.getElementById("cancel-button") === null) {
+		document.querySelector(
+			".form .container"
+		).innerHTML += `<button class="btn btn-danger" id="cancel-button" onclick="returnAddButton()">Cancel edit</button>`;
+	}
+
+	// push product info into boxes
+	document.getElementById("product-code").value =
+		productList[productIndex].code;
+	document.getElementById("product-price").value =
+		productList[productIndex].price;
+	document.getElementById("product-category").value =
+		productList[productIndex].category;
+	document.getElementById("product-desc").value =
+		productList[productIndex].desc;
+
+	// turn add button to edit button
+	document.getElementById("add-button").classList.remove("btn-primary");
+	document.getElementById("add-button").classList.add("btn-warning");
+	document.getElementById("add-button").innerHTML = "Save edits";
+	document
+		.getElementById("add-button")
+		.setAttribute("onclick", `saveEditedProduct(${productIndex});`);
+}
+
+function saveEditedProduct(productIndex) {
+	// get new values from input boxes
+	var product = {
+		code: document.getElementById("product-code").value,
+		price: document.getElementById("product-price").value,
+		category: document.getElementById("product-category").value,
+		desc: document.getElementById("product-desc").value,
+		image: document.getElementById("product-image").value,
+	};
+
+	// save new info into the edited product's object inside the productList
+	productList[productIndex].code = product.code;
+	productList[productIndex].price = product.price;
+	productList[productIndex].category = product.category;
+	productList[productIndex].desc = product.desc;
+
+	// check if user changed the picture. if not then don't edit the pic
+	if (product.image !== "") {
+		productList[productIndex].image = product.image;
+	}
+
+	// return the add button
+	returnAddButton();
+
+	// update local storage to the latest product list
+	localStorage.setItem("productList", JSON.stringify(productList));
+
+	// display new list of products while keeping search criteria
+	searchProduct();
+}
+
+function returnAddButton() {
+	// return the old properties of the add button
+	document.getElementById("add-button").classList.remove("btn-warning");
+	document.getElementById("add-button").classList.add("btn-primary");
+	document.getElementById("add-button").innerHTML = "Add product";
+	document
+		.getElementById("add-button")
+		.setAttribute("onclick", "addProduct();");
+
+	// clear input boxes while retaining search box value
+	var searchValue = document.getElementById("search-bar").value;
+	clearInputs();
+	document.getElementById("search-bar").value = searchValue;
+
+	// remove cancel button
+	document.getElementById("cancel-button").remove();
 }
