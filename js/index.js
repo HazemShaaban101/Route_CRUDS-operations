@@ -99,7 +99,7 @@ function displayProducts(array = null) {
 // delete function: this function removes product object from the product list array
 function deleteProduct(productIndex) {
 	productList.splice(productIndex, 1);
-	displayProducts();
+	searchProduct();
 }
 
 // search function: this function takes input from search bar everytime the value changes
