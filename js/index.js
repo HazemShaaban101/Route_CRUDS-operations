@@ -37,6 +37,7 @@ function clearInputs() {
 	document.getElementById("product-category").value = "";
 	document.getElementById("product-desc").value = "";
 	document.getElementById("product-image").value = "";
+	document.getElementById("search-bar").value = "";
 }
 
 function displayProducts(array = null) {
