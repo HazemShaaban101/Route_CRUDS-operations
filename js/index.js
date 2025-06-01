@@ -40,8 +40,8 @@ function clearInputs() {
 }
 
 function displayProducts(array = null) {
+	var productDisplayHTML = "";
 	if (array === null) {
-		var productDisplayHTML = "";
 		// loop over the entire array of product objects
 		for (var i = 0; i < productList.length; i++) {
 			// concatinate the HTML code responsible for displaying product i in the product list
@@ -64,15 +64,59 @@ function displayProducts(array = null) {
 						</div>
 					</div>`;
 		}
-
-		// after creating the entire product list HTML, insert it into the innerHTML of the product display area
-		document.getElementById("product-display-area").innerHTML =
-			productDisplayHTML;
+	} else {
+		for (var i = 0; i < array.length; i++) {
+			// loopp over input array and display products at the indexes saved in the array
+			productDisplayHTML += `<div class="col-md-2 my-2">
+						<div
+							class="item border border-2 rounded-3 rounded-top-0">
+							<img
+								src="images/${productList[array[i]].image.slice(
+									productList[array[i]].image.lastIndexOf(
+										"\\"
+									) + 1
+								)}"
+								alt="${productList[array[i]].desc}" />
+							<h3 class="h6 pt-2 px-2">Code: ${productList[array[i]].code}</h3>
+							<p class="h6 px-2">Price: ${productList[array[i]].price}</p>
+							<p class="h6 px-2">Category: ${productList[array[i]].category}</p>
+							<p class="h6 pb-1 px-2">Desc: ${productList[array[i]].desc}</p>
+							<div class="text-center px-2">
+								<button class="btn btn-outline-warning w-100 mb-2">Edit info</button>
+							<button onclick="deleteProduct(${
+								array[i]
+							})" class="btn btn-outline-danger w-100 mb-2">Delete product</button>
+							</div>
+						</div>
+					</div>`;
+		}
 	}
+	// after creating the entire product list HTML, insert it into the innerHTML of the product display area
+	document.getElementById("product-display-area").innerHTML =
+		productDisplayHTML;
 }
 
 // delete function: this function removes product object from the product list array
 function deleteProduct(productIndex) {
 	productList.splice(productIndex, 1);
 	displayProducts();
+}
+
+// search function: this function takes input from search bar everytime the value changes
+// using the oninput property. it then finds products that contain the keyword written in
+// the searchbox and displays it.
+function searchProduct() {
+	var productCode = document.getElementById("search-bar").value;
+	var arrayOfProducts = [];
+
+	// loop over all products and find ones that contain the keyword inside searchbox
+	for (var i = 0; i < productList.length; i++) {
+		if (productList[i].code.includes(productCode)) {
+			// if a matching product is found, push the index into an array for the display function
+			arrayOfProducts.push(i);
+		}
+	}
+
+	// utilize the newer displayproducts function that takes an array
+	displayProducts(arrayOfProducts);
 }
