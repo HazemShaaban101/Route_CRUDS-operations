@@ -49,7 +49,9 @@ function displayProducts(array = null) {
 						<div
 							class="item border border-2 rounded-3 rounded-top-0">
 							<img
-								src="images/laptop (1).jpg"
+								src="images/${productList[i].image.slice(
+									productList[i].image.lastIndexOf("\\") + 1
+								)}"
 								alt="${productList[i].desc}" />
 							<h3 class="h6 pt-2 px-2">Code: ${productList[i].code}</h3>
 							<p class="h6 px-2">Price: ${productList[i].price}</p>
