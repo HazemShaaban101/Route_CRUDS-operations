@@ -54,7 +54,11 @@ function displayProducts(array = null) {
 							<h3 class="h6 pt-2 px-2">Code: ${productList[i].code}</h3>
 							<p class="h6 px-2">Price: ${productList[i].price}</p>
 							<p class="h6 px-2">Category: ${productList[i].category}</p>
-							<p class="h6 pb-3 px-2">Desc: ${productList[i].desc}</p>
+							<p class="h6 pb-1 px-2">Desc: ${productList[i].desc}</p>
+							<div class="text-center px-2">
+								<button class="btn btn-outline-warning w-100 mb-2">Edit info</button>
+							<button class="btn btn-outline-danger w-100 mb-2">Delete product</button>
+							</div>
 						</div>
 					</div>`;
 		}
