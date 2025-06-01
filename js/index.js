@@ -59,7 +59,7 @@ function displayProducts(array = null) {
 							<p class="h6 pb-1 px-2">Desc: ${productList[i].desc}</p>
 							<div class="text-center px-2">
 								<button class="btn btn-outline-warning w-100 mb-2">Edit info</button>
-							<button class="btn btn-outline-danger w-100 mb-2">Delete product</button>
+							<button onclick="deleteProduct(${i})" class="btn btn-outline-danger w-100 mb-2">Delete product</button>
 							</div>
 						</div>
 					</div>`;
@@ -69,4 +69,10 @@ function displayProducts(array = null) {
 		document.getElementById("product-display-area").innerHTML =
 			productDisplayHTML;
 	}
+}
+
+// delete function: this function removes product object from the product list array
+function deleteProduct(productIndex) {
+	productList.splice(productIndex, 1);
+	displayProducts();
 }
