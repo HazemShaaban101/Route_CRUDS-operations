@@ -103,6 +103,9 @@ function displayProducts(array = null) {
 function deleteProduct(productIndex) {
 	productList.splice(productIndex, 1);
 	searchProduct();
+
+	// update local storage to the latest product list
+	localStorage.setItem("productList", JSON.stringify(productList));
 }
 
 // search function: this function takes input from search bar everytime the value changes
