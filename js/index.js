@@ -50,7 +50,7 @@ function displayProducts(array = null) {
 						<div
 							class="item border border-2 rounded-3 rounded-top-0">
 							<img
-								src="images/${productList[i].image.slice(
+								src="./images/${productList[i].image.slice(
 									productList[i].image.lastIndexOf("\\") + 1
 								)}"
 								alt="${productList[i].desc}" />
@@ -72,7 +72,7 @@ function displayProducts(array = null) {
 						<div
 							class="item border border-2 rounded-3 rounded-top-0">
 							<img
-								src="images/${productList[array[i]].image.slice(
+								src="./images/${productList[array[i]].image.slice(
 									productList[array[i]].image.lastIndexOf(
 										"\\"
 									) + 1
